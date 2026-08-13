@@ -1,0 +1,8 @@
+Django>=4.2,<5.0
+mysqlclient>=2.2.0
+pypdf>=3.0.0
+python-dotenv>=1.0.0
+anthropic>=1.0.0
+pandas>=2.0.0
+scikit-learn>=1.4.0
+scipy>=1.11.0
