@@ -2,17 +2,22 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+# Base directory of the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env file
 load_dotenv(BASE_DIR / ".env")
 
+# Security key used for cryptographic signing
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-change-in-production")
 
+# Run in debug mode if the environment variable is set to 'true'
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 
+# Hostnames that this Django site can serve
 ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,testserver").split(",") if h.strip()]
 
+# Applications enabled for this Django instance
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -23,6 +28,7 @@ INSTALLED_APPS = [
     "main.apps.MainConfig",
 ]
 
+# Pipeline of components executed during response handling
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -33,8 +39,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# The Python path to the root URL configurations
 ROOT_URLCONF = "urls"
 
+# Configuration for template rendering engines
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -51,8 +59,10 @@ TEMPLATES = [
     },
 ]
 
+# The entry point for WSGI-compatible web servers
 WSGI_APPLICATION = "project.wsgi.application"
 
+# Database connection settings
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -80,6 +90,7 @@ DATABASES = {
 #     }
 # }
 
+# Email sending configurations
 EMAIL_BACKEND = os.getenv(
     "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
 )
@@ -93,25 +104,29 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER or "webmaster@localhost")
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
+# Fall back to printing emails to the terminal if SMTP credentials aren't set
 if not EMAIL_HOST or not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+# URL route to redirect users to when login is required
 LOGIN_URL = "login"
 
+# List of password validation rules
 AUTH_PASSWORD_VALIDATORS = []
 
+# Localization and time zone configurations
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
+# Static files configuration
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+# User-uploaded files configuration
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Default primary key field type for auto-generated model IDs
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
